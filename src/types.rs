@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Parameter {
-    content: String,
+    pub content: String,
 }
 
 impl Parameter {
@@ -21,21 +21,21 @@ pub struct Misspell {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CorrectResponse {
-    content: Vec<Misspell>,
-    message: String,
-    query: String,
+    pub content: Vec<Misspell>,
+    pub message: String,
+    pub query: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FrequencyResponse {
-    content: HashMap<String, u32>,
-    message: String,
-    query: String,
+    pub content: HashMap<String, u32>,
+    pub message: String,
+    pub query: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TypicalResponse {
-    content: String,
-    message: String,
-    query: String,
+    pub content: String,
+    pub message: String,
+    pub query: String,
 }

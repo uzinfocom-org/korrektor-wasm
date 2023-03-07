@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 mod client;
 mod types;
 
@@ -6,7 +8,7 @@ use types::*;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-struct Korrektor {
+pub struct Korrektor {
     client: Client,
 }
 
