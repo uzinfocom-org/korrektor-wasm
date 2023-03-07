@@ -1,20 +1,34 @@
 mod client;
 mod types;
 
+use client::Client;
 use types::*;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub async fn run() -> Result<JsValue, JsValue> {
-    let res = reqwest::Client::new()
-        .get("https://api.github.com/repos/rustwasm/wasm-bindgen/branches/master")
-        .header("Accept", "application/vnd.github.v3+json")
-        .send()
-        .await
-        .unwrap();
+struct Korrektor {
+    client: Client,
+}
 
-    let text = res.text().await.unwrap();
-    let branch_info: Branch = serde_json::from_str(&text).unwrap();
+#[wasm_bindgen]
+impl Korrektor {
+    #[wasm_bindgen(constructor)]
+    pub fn new(token: String) -> Korrektor {
+        Korrektor {
+            client: Client::new(token),
+        }
+    }
 
-    Ok(serde_wasm_bindgen::to_value(&branch_info).unwrap())
+    pub async fn correct(&self, content: String, language: String) -> Result<JsValue, JsValue> {
+        let data = self
+            .client
+            .method::<CorrectResponse>(
+                "/private/correct/content",
+                Some(Parameter::from(content)),
+                Some(language),
+            )
+            .await;
+
+        Ok(serde_wasm_bindgen::to_value(&data).unwrap())
+    }
 }
