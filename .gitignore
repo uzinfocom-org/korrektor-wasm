@@ -1,0 +1,11 @@
+# Jetbrains files
+.idea
+
+# Macos files
+.DS_Store
+
+# Rust dumps
+target
+
+# WASM files
+pkg
